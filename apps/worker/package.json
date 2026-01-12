@@ -1,0 +1,20 @@
+{
+  "name": "@tuvi/worker",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/worker.ts",
+    "build": "tsc -p tsconfig.json --noEmit",
+    "lint": "echo \"lint not configured\"",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@tuvi/ai": "workspace:*",
+    "@tuvi/db": "workspace:*",
+    "bullmq": "^5.16.0"
+  },
+  "devDependencies": {
+    "tsx": "^4.16.2"
+  }
+}
