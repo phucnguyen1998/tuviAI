@@ -1,0 +1,21 @@
+{
+  "name": "@tuvi/db",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "db:migrate": "prisma migrate dev --name init",
+    "db:seed": "tsx ../../scripts/seed.ts",
+    "lint": "echo \"lint not configured\"",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "build": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.19.1"
+  },
+  "devDependencies": {
+    "prisma": "^5.19.1",
+    "tsx": "^4.16.2"
+  }
+}

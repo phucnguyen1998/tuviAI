@@ -1,0 +1,12 @@
+{
+  "name": "@tuvi/tuvi-engine",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "lint": "echo \"lint not configured\"",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "build": "tsc -p tsconfig.json --noEmit"
+  }
+}
