@@ -31,27 +31,19 @@ export default function SubmissionDetail() {
 
   const fetchSubmission = useCallback(async () => {
     setLoading(true);
-    try {
-      const response = await fetch(`${apiBase}/submissions/${params.id}`);
-      if (!response.ok) {
-        setError('Không tìm thấy submission');
-        setLoading(false);
-        return;
-      }
-      const data = (await response.json()) as SubmissionResponse;
-      setSubmission(data);
-      const latestReading = data.readings?.[0];
-      if (latestReading) {
-        setReading(latestReading);
-      }
+    const response = await fetch(`${apiBase}/submissions/${params.id}`);
+    if (!response.ok) {
+      setError('Không tìm thấy submission');
       setLoading(false);
-    } catch (err) {
-      const message = err instanceof Error ? err.message : 'Unknown error';
-      setError(
-        `${message}. Nếu gặp ERR_CONNECTION_REFUSED, hãy kiểm tra API đang chạy ở ${apiBase} và biến NEXT_PUBLIC_API_BASE_URL.`
-      );
-      setLoading(false);
+      return;
     }
+    const data = (await response.json()) as SubmissionResponse;
+    setSubmission(data);
+    const latestReading = data.readings?.[0];
+    if (latestReading) {
+      setReading(latestReading);
+    }
+    setLoading(false);
   }, [params.id]);
 
   useEffect(() => {
@@ -81,23 +73,16 @@ export default function SubmissionDetail() {
 
   const onRequestReading = async () => {
     setError('');
-    try {
-      const response = await fetch(`${apiBase}/submissions/${params.id}/readings`, {
-        method: 'POST',
-      });
-      if (!response.ok) {
-        const payload = await response.json().catch(() => ({}));
-        setError(payload.error || 'Không thể tạo reading');
-        return;
-      }
-      const data = (await response.json()) as { readingId: string };
-      setReading({ id: data.readingId, status: 'QUEUED' });
-    } catch (err) {
-      const message = err instanceof Error ? err.message : 'Unknown error';
-      setError(
-        `${message}. Nếu gặp ERR_CONNECTION_REFUSED, hãy kiểm tra API đang chạy ở ${apiBase} và biến NEXT_PUBLIC_API_BASE_URL.`
-      );
+    const response = await fetch(`${apiBase}/submissions/${params.id}/readings`, {
+      method: 'POST',
+    });
+    if (!response.ok) {
+      const payload = await response.json().catch(() => ({}));
+      setError(payload.error || 'Không thể tạo reading');
+      return;
     }
+    const data = (await response.json()) as { readingId: string };
+    setReading({ id: data.readingId, status: 'QUEUED' });
   };
 
   const chartJson = useMemo(() => JSON.stringify(submission?.chart?.chartJson, null, 2), [submission]);

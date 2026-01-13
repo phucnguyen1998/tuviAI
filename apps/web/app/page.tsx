@@ -48,10 +48,7 @@ export default function HomePage() {
       const data = (await response.json()) as { id: string };
       router.push(`/submissions/${data.id}`);
     } catch (err) {
-      const message = err instanceof Error ? err.message : 'Unknown error';
-      setError(
-        `${message}. Nếu gặp ERR_CONNECTION_REFUSED, hãy kiểm tra API đang chạy ở ${apiBase} và biến NEXT_PUBLIC_API_BASE_URL.`
-      );
+      setError(err instanceof Error ? err.message : 'Unknown error');
     } finally {
       setLoading(false);
     }
